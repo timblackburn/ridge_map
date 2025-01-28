@@ -1,0 +1,92 @@
+<!DOCTYPE html><html><head>
+  <title>Leaflet preview</title>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"integrity="sha384-o/2yZuJZWGJ4s/adjxVW71R+EO/LyCwdQfP5UWSgX/w87iiTXuvDZaejd3TsN7mf"crossorigin=""/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"integrity="sha384-okbbMvvx/qfQkmiQKfd5VifbKZ/W8p1qIsWvE1ROPUfHWsDcC8/BnHohF7vPg2T6"crossorigin=""></script>
+  <style type="text/css">
+    body {margin: 0;padding: 0;background-color: white;} html, body, #map{width: 100%;height: 100%;}
+    #map { position:absolute; top:0; bottom:0; width:100%; background: white; z-index: 1; }
+    #sliders{ position: absolute; padding:10px; top: 30px; right: 30px; width:250px; z-index: 5; border:1px solid #58595d78; background: rgba(255, 255, 255, 0.8)}
+    body {
+     font-family: Arial, sans-serif;
+     font-size: 12px;
+   }
+    label {
+     width: 80px;
+     display: inline-block;
+     padding: 0px 0px 10px 20px;
+    }
+    p {line-height:1.2}
+
+</style>
+
+<script>
+  function setOpacity(value, layer) {
+    // Remove layer if opacity set to 0 to minimize loading resources that aren't needed.
+    if (value==0) {
+      layer.remove();
+    } else {
+      layer.addTo(map);
+      layer.setOpacity(value);
+    }
+  }
+</script>
+
+</head>
+<body>
+  <div id="sliders">
+    <h3>Opacity</h3>
+    <div style="border:1px solid rgba(0, 0, 0, 0.506); padding:10px 5px 5px 5px">
+    <input id="slider2" type="range" min="0" max="1" step="0.1" value="1" oninput="setOpacity(this.value, sanborn1910)">
+    <label>1910/1911</label><br/>
+    
+    
+    <input id="slider3" type="range" min="0" max="1" step="0.1" value="0" oninput="setOpacity(this.value, sanborn1936)">
+    <label>1936</label><br/>
+
+    
+    <input id="slider4" type="range" min="0" max="1" step="0.1" value="0" oninput="setOpacity(this.value, sanborn1950)">
+    <label>1950/1951</label><br/>
+
+    
+    <input id="slider1" type="range" min="0" max="1" step="0.1" value=".5" oninput="osm.setOpacity(this.value)">
+    <label>Current</label> 
+    </div>
+    <br/>
+    <b>Notes:</b> <p>1936 map is north of 107th Street only.</p><p>The 1910/1911 map has very sparse coverage of Beverly Hills west of Wood Street, where very little development had ocurred by that time.</p>
+
+  </div>
+
+<!--
+(<a href="https://timblackburn.github.io/sanborn-1911/sanborn-key-MP-1911.jpg">key</a>)  
+(<a href="https://timblackburn.github.io/sanborn-1950/sanborn-key-MP-1950.jpg">key</a>
+-->
+
+  <div id="map"></div>
+
+  <script>
+
+    var attr="Sanborn Maps (<a href=\"https://www.loc.gov/resource/g4104cm.g017901910D/?sp=2\">1910</a>, <a href=\"https://www.loc.gov/resource/g4104cm.g017901911H/?st=gallery\">1911</a>, <a href=\"https://www.loc.gov/resource/g4104cm.g01790193635/?sp=3">1936</a>, <a href=\"https://www.loc.gov/resource/g4104cm.g017901950a49/?st=gallery\">1950</a>, <a href=\"https://www.loc.gov/resource/g4104cm.g01790195135/?sp=5\">1951</a>)";
+
+    var map = L.map('map', {attributionControl: false})
+        .setView([41.707626,-87.666899], 13);
+        map.setMaxBounds(map.getBounds());
+
+    L.control.attribution({prefix: false}).addTo(map);
+
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{minZoom: 12, maxZoom: 21, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    osm.setOpacity(.5);
+
+    var sanborn1910 = L.tileLayer('https://timblackburn.github.io/ridge_map_1910_1911/{z}/{x}/{y}.png', {bounds:[[41.730458,-87.653198],[41.673611,-87.681070]], minZoom: 12, maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr}).addTo(map);
+
+    var sanborn1936 = L.tileLayer('https://timblackburn.github.io/ridge_map_1936/{z}/{x}/{y}.png', {bounds: [[41.736012,-87.648481], [41.698686,-87.681641]], minZoom: 12, maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr});
+    sanborn1936.setOpacity(0);
+
+    var sanborn1950 = L.tileLayer('https://timblackburn.github.io/ridge_map_1950_1951/{z}/{x}/{y}.png', {bounds: [[41.736420,-87.646357],[41.673448,-87.680988]], minZoom: 12,maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr});
+    sanborn1950.setOpacity(0);
+
+</script>
+</body>
+</html>
