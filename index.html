@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-  <title>Ridge historic maps</title>
+  <title>Ridge historical maps</title>
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"integrity="sha384-o/2yZuJZWGJ4s/adjxVW71R+EO/LyCwdQfP5UWSgX/w87iiTXuvDZaejd3TsN7mf"crossorigin=""/>
 
@@ -53,7 +53,11 @@
 
     
     <input id="slider1" type="range" min="0" max="1" step="0.1" value=".4" oninput="osm.setOpacity(this.value)">
-    <label>Current</label> 
+    <label>Current</label><br/>
+
+
+    <input id="checkbox_eight_acre" type="checkbox" value="checked" onclick="if (this.checked) { eighty_acre.addTo(map);} else {eighty_acre.remove();}">
+    <label>Plats</label> <span style="font-size: 0.8em">(only zoomed in)</span>
     </div>
     <br/>
     <h3>Notes</h3><p>1936 map is north of 107th Street only.</p><p>The 1910/1911 map has very sparse coverage of Beverly Hills west of Wood Street.</p>
@@ -64,11 +68,6 @@
         <a href="http://timblackburn.github.io/ridge_map_1936/sanborn-key-1936.png">1936-1951</a>
       </p>
   </div>
-
-<!--
-(<a href="https://timblackburn.github.io/sanborn-1911/sanborn-key-MP-1911.jpg">key</a>)  
-(<a href="https://timblackburn.github.io/sanborn-1950/sanborn-key-MP-1950.jpg">key</a>
--->
 
   <div id="map"></div>
 
@@ -97,6 +96,8 @@
 
     var sanborn1950 = L.tileLayer('https://timblackburn.github.io/ridge_map_1950_1951/{z}/{x}/{y}.png', {bounds: [[41.736420,-87.646357],[41.673448,-87.680988]], minZoom: 12,maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr});
     sanborn1950.setOpacity(0);
+
+    var eighty_acre= L.tileLayer('https://timblackburn.github.io/ridge_map_eighty_acres/{z}/{x}/{y}.png', {minZoom: 17, maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr});
 
 </script>
 </body>
