@@ -8,14 +8,14 @@
   <style type="text/css">
     body {margin: 0;padding: 0;background-color: white;} html, body, #map{width: 100%;height: 100%;}
     #map { position:absolute; top:0; bottom:0; width:100%; background: white; z-index: 1; }
-    #sliders{ position: absolute; padding:5px; top: 1px; right: 1px; width:140px; z-index: 5; border:1px solid #58595d78; background: rgba(255, 255, 255, 0.8)}
+    #sliders{ position: absolute; padding:5px; top: 1px; right: 1px; width:142px; z-index: 5; border:1px solid #58595d78; background: rgba(255, 255, 255, 0.8)}
     body {
      font-family: Arial, sans-serif;
      font-size: 12px;
    }
     label {
      display: inline-block;
-     padding: 0px 0px 10px 3px;
+     padding: 0px 0px 10px 2px;
     }
     p {line-height:1.1; margin:0px 0px 5px 0px; padding:0px}
     input[type="range"] {width: 40%;}
@@ -57,7 +57,7 @@
 
 
     <input id="checkbox_eight_acre" type="checkbox" value="checked" onclick="if (this.checked) { eighty_acre.addTo(map);} else {eighty_acre.remove();}">
-    <label>Plats</label> <span style="font-size: 0.8em">(only zoomed in)</span>
+    <label>Plats</label> <span style="font-size: 0.75em">(only zoomed in)</span>
     </div>
     <br/>
     <h3>Notes</h3><p>1936 map is north of 107th Street only.</p><p>The 1910/1911 map has very sparse coverage of Beverly Hills west of Wood Street.</p>
@@ -97,7 +97,7 @@
     var sanborn1950 = L.tileLayer('https://timblackburn.github.io/ridge_map_1950_1951/{z}/{x}/{y}.png', {bounds: [[41.736420,-87.646357],[41.673448,-87.680988]], minZoom: 12,maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr});
     sanborn1950.setOpacity(0);
 
-    var eighty_acre= L.tileLayer('https://timblackburn.github.io/ridge_map_eighty_acres/{z}/{x}/{y}.png', {minZoom: 17, maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: attr});
+    var eighty_acre= L.tileLayer('https://timblackburn.github.io/ridge_map_eighty_acres/{z}/{x}/{y}.png', {minZoom: 17, maxNativeZoom: 19, maxZoom: 21, tms: false, attribution: "City of Chicago <a href='https://gisapps.chicago.gov/KioskMap/'>80 Acre Plat Maps</a>"});
 
 </script>
 </body>
